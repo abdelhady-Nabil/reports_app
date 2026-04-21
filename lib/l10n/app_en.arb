@@ -1,0 +1,59 @@
+{
+  "appTitle": "Butchery management Software",
+  "slaughterhouses": "Slaughterhouses",
+  "factories": "Factories",
+  "butcherShops": "Butchery Shops",
+
+  "receivingArea": "Receiving Area",
+  "storageArea": "Storage Area",
+  "operationArea": "Operation Area",
+  "salesArea": "Sales Area",
+
+
+  "rawMeatStorage": "Raw Meat Storage",
+  "spicesStorage": "Spices Storage",
+  "packagingMaterials": "Packaging Materials Storage",
+  "sanitizationMaterials": "Sanitization Materials Storage",
+
+  "meatProcessing": "Meat Processing Area",
+  "poultryProcessing": "Poultry Processing Area",
+  "manufacturingProcessing": "Processed Foods Area",
+  "smokedMeatProcessing": "Smoked Meat Processing Area",
+  "fishProcessing": "Fish Processing Area",
+  "saveReport": "Save Report",
+  "receivingArea": "Receiving Area",
+  "salesArea": "Sales Area",
+
+  "rawMeatStorage": "Raw Meat Storage",
+  "spicesStorage": "Spices Storage",
+  "packagingStorage": "Packaging Materials Storage",
+  "cleaningMaterialsStorage": "Cleaning Materials Storage",
+
+  "meatProcessing": "Meat Processing",
+  "poultryProcessing": "Poultry Processing",
+  "processedFood": "Processed Food",
+  "smokedMeat": "Smoked Meat",
+  "fishProcessing": "Fish Processing",
+
+  "temperature": "Temperature",
+  "pestControl": "Pest Control",
+  "tools": "Tools Used",
+  "cleanliness": "General Cleanliness",
+  "maintenance": "Maintenance",
+  "personalHygiene": "Personal Hygiene",
+  "cashierArea": "Cashier Area",
+  "drainage": "Drainage",
+  "customerService": "Customer Service",
+  "ventilation": "ventilation",
+  "workflowDivision": "Workflow Division",
+  "showFinalReport": "Show Final Report",
+  "generalEvaluation": "Overall Evaluation",
+  "add_report_info": "Add shop name, date & notes",
+  "report_info": "Report Information",
+  "place_name": "Place Name",
+  "general_notes": "General Notes",
+  "save": "Save",
+  "report_date": "Report Date",
+  "delete": "Delete"
+
+}

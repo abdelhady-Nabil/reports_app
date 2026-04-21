@@ -1,0 +1,48 @@
+{
+  "appTitle": "نظام وتقييم الإدارة",
+  "slaughterhouses": "مجازر",
+  "factories": "مصانع",
+  "butcherShops": "محلات الجزارة",
+
+  "processedFood": "Processed Food",
+  "receivingArea": "منطقة الاستلام",
+  "storageArea": "منطقة التخزين",
+  "operationArea": "منطقة التشغيل",
+  "salesArea": "منطقة البيع",
+
+  "rawMeatStorage": "مخازن اللحوم الخام",
+  "spicesStorage": "مخازن البهارات",
+  "packagingMaterials": "مخازن مواد التعبئة والتغليف",
+  "sanitizationMaterials": "مخازن مواد التطهير والتعقيم",
+
+  "meatProcessing": "منطقة تشغيل اللحوم",
+  "poultryProcessing": "منطقة تشغيل الدواجن",
+  "manufacturingProcessing": "منطقة تشغيل المصنعات",
+  "smokedMeatProcessing": "منطقة تشغيل اللحوم المدخنة",
+  "fishProcessing": "منطقة تشغيل الأسماك",
+  "temperature": "درجة الحرارة",
+  "pestControl": "مكافحة الحشرات والقوارض",
+  "tools": "الأدوات المستخدمة",
+  "cleanliness": "النظافة العامة",
+  "maintenance": "الصيانات",
+  "personalHygiene": "النظافة الشخصية",
+  "cashierArea": "منطقة الكاشير",
+  "drainage": "الصرف الصحي",
+  "customerService": "معاملة الزبون",
+  "notes": "الملاحظات",
+  "saveReport": "حفظ التقرير",
+  "showFinalReport": "عرض التقرير النهائي",
+  "generalEvaluation": "التقييم العام",
+  "ventilation": "تهوية",
+  "workflowDivision": "تقسيم منطقه التشغيل",
+  "add_report_info": "إضافة اسم المحل والتاريخ والملاحظات",
+  "report_info": "بيانات التقرير",
+  "place_name": "اسم المكان",
+  "general_notes": "ملاحظات عامة",
+  "save": "حفظ",
+  "report_date": "تاريخ التقرير",
+  "delete": "حذف"
+
+
+
+}
