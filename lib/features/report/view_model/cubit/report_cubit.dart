@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,7 +15,9 @@ import '../../model/zone_report.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
-
+import 'dart:io';
+import 'package:path_provider/path_provider.dart';
+import 'package:open_filex/open_filex.dart';
 
 class ReportCubit extends Cubit<ReportStates> {
   ReportCubit() : super(ReportInitial());
@@ -291,6 +294,15 @@ class ReportCubit extends Cubit<ReportStates> {
                           ],
                         );
                       }),
+                      if (zone.notes.isNotEmpty)
+                        pw.Padding(
+                          padding: const pw.EdgeInsets.only(top: 6),
+                          child: pw.Text(
+                            "${t.notes}: ${zone.notes}",
+                            style: pw.TextStyle(fontSize: 12),
+                            textAlign: isArabic ? pw.TextAlign.right : pw.TextAlign.left,
+                          ),
+                        ),
 
 
                       pw.SizedBox(height: 10),
@@ -322,10 +334,18 @@ class ReportCubit extends Cubit<ReportStates> {
         ],
       ),
     );
-
-    await Printing.layoutPdf(
-      onLayout: (format) async => pdf.save(),
-    );
+    final bytes = await pdf.save();
+    if (Platform.isAndroid || Platform.isIOS) {
+      // ✅ موبايل حقيقي
+      final dir = await getApplicationDocumentsDirectory();
+      final file = File('${dir.path}/report_${DateTime.now().millisecondsSinceEpoch}.pdf');
+      await file.writeAsBytes(bytes);
+      await OpenFilex.open(file.path);
+    } else {
+      // ✅ إميلاتور أو Desktop
+      await Printing.layoutPdf(
+        onLayout: (format) async => bytes,
+      );}
   }
 
   void resetReport() {

@@ -68,6 +68,8 @@ extension LocalizationHelper on AppLocalizations {
 
       case "fishProcessing":
         return fishProcessing;
+      case "notes":
+        return notes;
 
       default:
         return key;

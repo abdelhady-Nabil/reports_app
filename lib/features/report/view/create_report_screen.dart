@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:reports_app/core/widgets/text_wedget.dart';
 import 'package:reports_app/helper/localization_helper.dart';
 
 import '../../../core/widgets/app_button.dart';
@@ -79,40 +80,37 @@ class _CreateReportScreenState extends State<CreateReportScreen> {
 
             const SizedBox(height: 20),
 
-            // // ================= NOTES CARD =================
-            // Container(
-            //   padding: const EdgeInsets.all(16),
-            //   decoration: BoxDecoration(
-            //     color: Colors.white,
-            //     borderRadius: BorderRadius.circular(16),
-            //     boxShadow: [
-            //       BoxShadow(
-            //         color: Colors.black.withOpacity(0.05),
-            //         blurRadius: 10,
-            //         offset: const Offset(0, 5),
-            //       )
-            //     ],
-            //   ),
-            //   child: Column(
-            //     crossAxisAlignment: CrossAxisAlignment.start,
-            //     children: [
-            //       const Text(
-            //         "الملاحظات",
-            //         style: TextStyle(
-            //           fontSize: 16,
-            //           fontWeight: FontWeight.bold,
-            //         ),
-            //       ),
-            //
-            //       const SizedBox(height: 10),
-            //
-            //       NotesField(
-            //         value: notes,
-            //         onChanged: (v) => setState(() => notes = v),
-            //       ),
-            //     ],
-            //   ),
-            // ),
+            // ================= NOTES CARD =================
+            // ================= NOTES =================
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                AppText(title: t.notes,color: Colors.black,),
+
+
+                const SizedBox(height: 8),
+
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(color: Colors.grey.shade200),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.04),
+                        blurRadius: 8,
+                        offset: const Offset(0, 4),
+                      )
+                    ],
+                  ),
+                  child: NotesField(
+                    value: notes,
+                    onChanged: (v) => setState(() => notes = v),
+                  ),
+                ),
+              ],
+            ),
 
             const SizedBox(height: 30),
 
@@ -145,30 +143,32 @@ class _CreateReportScreenState extends State<CreateReportScreen> {
 
 }
 
-// class NotesField extends StatelessWidget {
-//   final String value;
-//   final Function(String) onChanged;
-//
-//   const NotesField({
-//     super.key,
-//     required this.value,
-//     required this.onChanged,
-//   });
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return TextField(
-//       onChanged: onChanged,
-//       maxLines: 4,
-//       decoration: InputDecoration(
-//         hintText: "الملاحظات",
-//         filled: true,
-//         fillColor: Colors.white,
-//         border: OutlineInputBorder(
-//           borderRadius: BorderRadius.circular(12),
-//           borderSide: BorderSide.none,
-//         ),
-//       ),
-//     );
-//   }
-// }
+class NotesField extends StatelessWidget {
+  final String value;
+  final Function(String) onChanged;
+
+  const NotesField({
+    super.key,
+    required this.value,
+    required this.onChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+
+    return TextField(
+      onChanged: onChanged,
+      maxLines: 5,
+      style: const TextStyle(
+        fontSize: 25,
+        color: Colors.black,
+      ),
+      decoration: InputDecoration(
+        hintText: AppLocalizations.of(context)!.notes,
+        hintStyle: const TextStyle(color: Colors.black,fontSize: 30),
+        border: InputBorder.none,
+        contentPadding: const EdgeInsets.symmetric(vertical: 8),
+      ),
+    );
+  }
+}

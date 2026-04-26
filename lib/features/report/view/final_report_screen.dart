@@ -195,7 +195,43 @@ class FinalReportScreen extends StatelessWidget {
                         );
                       }),
 
+
                       const SizedBox(height: 10),
+                      // ================= ZONE NOTES =================
+                      if (zone.notes.isNotEmpty)
+                        Column(
+
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            AppText(title: t.notes,color: Colors.black,),
+                            Container(
+                              margin: const EdgeInsets.only(bottom: 16),
+                              padding: const EdgeInsets.all(16),
+
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(20),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.05),
+                                    blurRadius: 10,
+                                    offset: const Offset(0, 5),
+                                  )
+                                ],
+                              ),
+                              child:Text(
+                                zone.notes,
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: isTablet ? 35 : 25,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+
+                            ),
+                          ],
+                        ),
+
 
 
                     ],
