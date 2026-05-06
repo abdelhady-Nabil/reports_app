@@ -38,6 +38,15 @@ class ReportCubit extends Cubit<ReportStates> {
       RatingItemModel(key: "personalHygiene"),
     ],
 
+    "productDelivery": [
+      RatingItemModel(key: "areaOrganization"),
+      RatingItemModel(key: "colorCoding"),
+      RatingItemModel(key: "pestControl"),
+      RatingItemModel(key: "temperature"),
+      RatingItemModel(key: "cleanliness"),
+      RatingItemModel(key: "personalHygiene"),
+    ],
+
     "salesArea": [
       RatingItemModel(key: "temperature"),
       RatingItemModel(key: "pestControl"),
@@ -50,6 +59,7 @@ class ReportCubit extends Cubit<ReportStates> {
       RatingItemModel(key: "customerService"),
     ],
 
+    //shops
     // ================= STORAGE =================
     "rawMeatStorage": [
       RatingItemModel(key: "temperature"),
@@ -137,6 +147,212 @@ class ReportCubit extends Cubit<ReportStates> {
       RatingItemModel(key: "personalHygiene"),
       RatingItemModel(key: "workflowDivision"),
     ],
+
+    //factory
+    // ================= STORAGE =================
+    "rawMaterialsStorageZone": [
+      RatingItemModel(key: "temperature"),
+      RatingItemModel(key: "pestControl"),
+      RatingItemModel(key: "toolsEquipmentCondition"),
+      RatingItemModel(key: "cleanliness"),
+      RatingItemModel(key: "ventilation"),
+    ],
+
+    "finishedProductStorageZone": [
+      RatingItemModel(key: "productInformation"),
+      RatingItemModel(key: "colorCoding"),
+      RatingItemModel(key: "storageOrganization"),
+      RatingItemModel(key: "temperature"),
+      RatingItemModel(key: "cleanliness"),
+      RatingItemModel(key: "generalCondition"),
+    ],
+
+    "packagingMaterialsStorageZone": [
+      RatingItemModel(key: "temperature"),
+      RatingItemModel(key: "cleanliness"),
+      RatingItemModel(key: "organizationData"),
+
+    ],
+
+    "spicesStorageZone": [
+      RatingItemModel(key: "temperature"),
+      RatingItemModel(key: "organizationData"),
+      RatingItemModel(key: "cleanliness"),
+
+    ],
+
+    "cleaningAndSanitizingMaterialsStorageZone": [
+      RatingItemModel(key: "temperature"),
+      RatingItemModel(key: "organizationData"),
+      RatingItemModel(key: "cleanliness"),
+    ],
+
+    "staffRestArea": [
+      RatingItemModel(key: "tables"),
+      RatingItemModel(key: "chairs"),
+      RatingItemModel(key: "lockers"),
+      RatingItemModel(key: "cleanliness"),
+      RatingItemModel(key: "temperature"),
+      RatingItemModel(key: "ventilation"),
+      RatingItemModel(key: "smokingArea"),
+    ],
+    "packagingArea": [
+      RatingItemModel(key: "temperature"),
+      RatingItemModel(key: "pestControl"),
+      RatingItemModel(key: "toolsEquipmentCondition"),
+      RatingItemModel(key: "cleanliness"),
+      RatingItemModel(key: "personalHygiene"),
+    ],
+
+    // ================= OPERATION =================
+    "meatFProcessing": [
+      RatingItemModel(key: "temperature"),
+      RatingItemModel(key: "pestControl"),
+      RatingItemModel(key: "tools"),
+      RatingItemModel(key: "cleanliness"),
+      RatingItemModel(key: "operationalDocsCycle"),
+      RatingItemModel(key: "personalHygiene"),
+      RatingItemModel(key: "workflowDivision"),
+    ],
+
+    "poultryFProcessing": [
+      RatingItemModel(key: "temperature"),
+      RatingItemModel(key: "pestControl"),
+      RatingItemModel(key: "tools"),
+      RatingItemModel(key: "cleanliness"),
+      RatingItemModel(key: "operationalDocsCycle"),
+      RatingItemModel(key: "personalHygiene"),
+      RatingItemModel(key: "workflowDivision"),
+    ],
+
+    "manufacturingFProcessing": [
+      RatingItemModel(key: "temperature"),
+      RatingItemModel(key: "pestControl"),
+      RatingItemModel(key: "tools"),
+      RatingItemModel(key: "cleanliness"),
+      RatingItemModel(key: "operationalDocsCycle"),
+      RatingItemModel(key: "personalHygiene"),
+      RatingItemModel(key: "workflowDivision"),
+    ],
+
+    "smokedMeatFProcessing": [
+      RatingItemModel(key: "temperature"),
+      RatingItemModel(key: "pestControl"),
+      RatingItemModel(key: "tools"),
+      RatingItemModel(key: "cleanliness"),
+      RatingItemModel(key: "operationalDocsCycle"),
+      RatingItemModel(key: "personalHygiene"),
+      RatingItemModel(key: "workflowDivision"),
+    ],
+
+    "fishFProcessing": [
+      RatingItemModel(key: "temperature"),
+      RatingItemModel(key: "pestControl"),
+      RatingItemModel(key: "tools"),
+      RatingItemModel(key: "cleanliness"),
+      RatingItemModel(key: "operationalDocsCycle"),
+      RatingItemModel(key: "personalHygiene"),
+      RatingItemModel(key: "workflowDivision"),
+    ],
+
+    //slaughterhouse
+    "veterinaryVisualInspectionArea": [
+      RatingItemModel(key: "temperature"),
+      RatingItemModel(key: "pestControl"),
+      RatingItemModel(key: "toolsEquipmentCondition"),
+      RatingItemModel(key: "cleanliness"),
+      RatingItemModel(key: "ventilation"),
+    ],
+
+    "restAndQuarantineArea": [
+      RatingItemModel(key: "temperature"),
+      RatingItemModel(key: "pestControl"),
+      RatingItemModel(key: "toolsEquipmentCondition"),
+      RatingItemModel(key: "cleanliness"),
+      RatingItemModel(key: "personalHygiene"),
+    ],
+    //operation slaughterhouse
+    "slaughterBarrel": [
+      RatingItemModel(key: "temperature"),
+      RatingItemModel(key: "pestControl"),
+      RatingItemModel(key: "toolsEquipmentCondition"),
+      RatingItemModel(key: "cleanliness"),
+      RatingItemModel(key: "personalHygiene"),
+    ],
+    "bleedingArea": [
+      RatingItemModel(key: "temperature"),
+      RatingItemModel(key: "pestControl"),
+      RatingItemModel(key: "toolsEquipmentCondition"),
+      RatingItemModel(key: "cleanliness"),
+      RatingItemModel(key: "personalHygiene"),
+    ],
+    "skinningArea": [
+      RatingItemModel(key: "temperature"),
+      RatingItemModel(key: "pestControl"),
+      RatingItemModel(key: "toolsEquipmentCondition"),
+      RatingItemModel(key: "cleanliness"),
+      RatingItemModel(key: "personalHygiene"),
+    ],
+    "eviscerationArea": [
+      RatingItemModel(key: "temperature"),
+      RatingItemModel(key: "pestControl"),
+      RatingItemModel(key: "toolsEquipmentCondition"),
+      RatingItemModel(key: "cleanliness"),
+      RatingItemModel(key: "personalHygiene"),
+    ],
+    "splittingArea": [
+      RatingItemModel(key: "temperature"),
+      RatingItemModel(key: "pestControl"),
+      RatingItemModel(key: "toolsEquipmentCondition"),
+      RatingItemModel(key: "cleanliness"),
+      RatingItemModel(key: "personalHygiene"),
+    ],
+
+
+    "internalVeterinaryInspectionArea": [
+      RatingItemModel(key: "personalHygiene"),
+      RatingItemModel(key: "cleanliness"),
+      RatingItemModel(key: "pestControl"),
+      RatingItemModel(key: "toolsEquipmentCondition"),
+    ],
+
+    "meatWashingAndSanitizationCorridor": [
+      RatingItemModel(key: "temperature"),
+      RatingItemModel(key: "pestControl"),
+      RatingItemModel(key: "toolsEquipmentCondition"),
+      RatingItemModel(key: "cleanliness"),
+      RatingItemModel(key: "personalHygiene"),
+    ],
+
+    "rapidCoolingCorridor": [
+      RatingItemModel(key: "temperature"),
+      RatingItemModel(key: "cleanliness"),
+      RatingItemModel(key: "organizationData"),
+    ],
+
+    "waxingArea": [
+      RatingItemModel(key: "areaOrganization"),
+      RatingItemModel(key: "colorCoding"),
+      RatingItemModel(key: "pestControl"),
+      RatingItemModel(key: "temperature"),
+      RatingItemModel(key: "cleanliness"),
+      RatingItemModel(key: "personalHygiene"),
+    ],
+
+    "rawDeliveryArea": [
+      RatingItemModel(key: "temperature"),
+      RatingItemModel(key: "organizationData"),
+      RatingItemModel(key: "cleanliness"),
+    ],
+
+    "deboningAndCuttingArea": [
+      RatingItemModel(key: "temperature"),
+      RatingItemModel(key: "pestControl"),
+      RatingItemModel(key: "toolsEquipmentCondition"),
+      RatingItemModel(key: "cleanliness"),
+      RatingItemModel(key: "personalHygiene"),
+    ],
+
   };
 
 
@@ -172,6 +388,12 @@ class ReportCubit extends Cubit<ReportStates> {
     required String name,
     required DateTime date,
     required String notes,
+    required String address,
+    required TimeOfDay time,
+    required String inspectorName,
+    required String escortName,
+    required String jobTitle,
+    required String officialDocument,
   }) {
     factoryName = name;
     reportDate = date;
@@ -181,6 +403,14 @@ class ReportCubit extends Cubit<ReportStates> {
       factoryName: name,
       date: date,
       generalNotes: notes,
+      address: address,
+      reportTime: time,
+
+      inspectorName: inspectorName,
+      escortName: escortName,
+      jobTitle: jobTitle,
+      officialDocument: officialDocument,
+
     );
 
     emit(ReportUpdated());
@@ -191,6 +421,13 @@ class ReportCubit extends Cubit<ReportStates> {
     date: DateTime.now(), // ✅ الحل هنا
     zones: [],
     generalNotes: '',
+    address: '',
+    inspectorName: '',
+    escortName: '',
+    jobTitle: '',
+    officialDocument: '',
+    reportTime: null,
+
 
   );
 
@@ -232,26 +469,100 @@ class ReportCubit extends Cubit<ReportStates> {
               children: [
 
                 // ================= HEADER =================
-                pw.Text(
-                    t.showFinalReport,
-                    style: pw.TextStyle(fontSize: 24),
-                  textAlign: isArabic ? pw.TextAlign.right : pw.TextAlign.left,
+                pw.Row(
+                  mainAxisAlignment: pw.MainAxisAlignment.center,
+                  children:
+                    [
+                      pw.Text(
+                        t.showFinalReport,
+                        style: pw.TextStyle(fontSize: 24),
+                        textAlign: isArabic ? pw.TextAlign.right : pw.TextAlign.left,
+                      ),
+                    ]
                 ),
+
 
                 pw.SizedBox(height: 10),
 
-                pw.Text("${t.place_name}: ${report.factoryName}",textAlign: isArabic ? pw.TextAlign.right : pw.TextAlign.left,),
-                pw.Text("${t.report_date}: ${report.date.toString().split(' ')[0]}",textAlign: isArabic ? pw.TextAlign.right : pw.TextAlign.left,),
+                // ================= HEADER =================
+                pw.Column(
+                  crossAxisAlignment: pw.CrossAxisAlignment.start,
+                  children: [
 
-                pw.SizedBox(height: 10),
+                    pw.SizedBox(height: 20),
 
-                pw.Text(
-                  "${t.generalEvaluation}: ${(report.totalAverage * 10).toStringAsFixed(0)}%",
-                  textAlign: isArabic ? pw.TextAlign.right : pw.TextAlign.left,
+                    /// NAME
+                    pw.Text(
+                      "${t.name} : ${report.factoryName}",
+                      style: pw.TextStyle(fontSize: 18),
+                    ),
 
+                    pw.SizedBox(height: 8),
+
+                    /// ADDRESS
+                    pw.Text(
+                      "${t.address} : ${report.address}",
+                      style: pw.TextStyle(fontSize: 18),
+                    ),
+
+                    pw.SizedBox(height: 8),
+
+                    /// DATE
+                    pw.Text(
+                      "${t.date} : ${report.date.toString().split(' ')[0]}",
+                      style: pw.TextStyle(fontSize: 18),
+                    ),
+
+                    pw.SizedBox(height: 8),
+
+                    pw.Text(
+                      "${t.time} : ${report.reportTime!.hour % 12 == 0 ? 12 : report.reportTime!.hour % 12}:${report.reportTime?.minute.toString().padLeft(2, '0')}",
+                      style: pw.TextStyle(fontSize: 18),
+                    ),
+
+                    pw.SizedBox(height: 8),
+
+                    /// INSPECTOR
+                    pw.Text(
+                      "${t.inspectorName} : ${report.inspectorName}",
+                      style: pw.TextStyle(fontSize: 18),
+                    ),
+
+                    pw.SizedBox(height: 8),
+
+                    /// ESCORT
+                    pw.Text(
+                      "${t.escortName} : ${report.escortName}",
+                      style: pw.TextStyle(fontSize: 18),
+                    ),
+
+                    pw.SizedBox(height: 8),
+
+                    /// JOB TITLE
+                    pw.Text(
+                      "${t.jobTitle} : ${report.jobTitle}",
+                      style: pw.TextStyle(fontSize: 18),
+                    ),
+
+                    pw.SizedBox(height: 8),
+
+                    /// OFFICIAL DOCUMENT
+                    pw.Text(
+                      "${t.officialDocument} : ${report.officialDocument}",
+                      style: pw.TextStyle(fontSize: 18),
+                    ),
+
+                    pw.SizedBox(height: 15),
+
+                    /// GENERAL EVALUATION
+                    pw.Text( "${t.generalEvaluation} : ${(report.totalAverage * 10).toStringAsFixed(0)}%", textAlign: isArabic ? pw.TextAlign.right : pw.TextAlign.left, style: pw.TextStyle(fontSize:18), ),
+                  ],
                 ),
+
+                pw.SizedBox(height: 20),
 
                 pw.Divider(),
+
 
                 // ================= ZONES =================
                 ...report.zones.map((zone) {
@@ -306,6 +617,24 @@ class ReportCubit extends Cubit<ReportStates> {
 
 
                       pw.SizedBox(height: 10),
+                      if (zone.images.isNotEmpty)
+                        pw.Column(
+                            crossAxisAlignment: pw.CrossAxisAlignment.start,
+                            children: [
+                            pw.Text("${t.photos}",),
+                            pw.SizedBox(height: 10),
+                            pw.Wrap(
+                              spacing: 10,
+                              children: zone.images.map((path) {
+                                final image = pw.MemoryImage(File(path).readAsBytesSync());
+
+                                return pw.Image(image, width: 200, height: 200);
+                              }).toList(),
+                            ),
+                          ]
+                        ),
+
+                      pw.SizedBox(height: 10),
                       pw.Divider(),
                     ],
                   );
@@ -348,12 +677,33 @@ class ReportCubit extends Cubit<ReportStates> {
       );}
   }
 
-  void resetReport() {
+  Future<void> resetReport() async {
+    // 1. امسح الصور من الجهاز
+    for (var zone in masterReport.zones) {
+      for (var path in zone.images) {
+        final file = File(path);
+        if (await file.exists()) {
+          await file.delete();
+        }
+      }
+    }
+
+    // 2. امسح من SharedPreferences
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove("saved_report");
+
+    // 3. صفّر الموديل
     masterReport = MasterReport(
       factoryName: "",
       date: DateTime.now(),
       zones: [],
       generalNotes: "",
+      address: '',
+      inspectorName: '',
+      escortName: '',
+      jobTitle: '',
+      officialDocument: '',
+      reportTime: null,
     );
 
     emit(ReportUpdated());
@@ -375,4 +725,14 @@ class ReportCubit extends Cubit<ReportStates> {
       emit(ReportUpdated());
     }
   }
+
+  Future<void> deleteImages(List<String> paths) async {
+    for (var path in paths) {
+      final file = File(path);
+      if (await file.exists()) {
+        await file.delete();
+      }
+    }
+  }
+
 }

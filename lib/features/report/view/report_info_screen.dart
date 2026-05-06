@@ -6,7 +6,12 @@ import 'package:reports_app/core/widgets/text_wedget.dart';
 import '../view_model/cubit/report_cubit.dart';
 
 class ReportInfoScreen extends StatefulWidget {
-  const ReportInfoScreen({super.key});
+  final Widget? nextScreen;
+
+  const ReportInfoScreen({
+    super.key,
+    this.nextScreen,
+  });
 
   @override
   State<ReportInfoScreen> createState() => _ReportInfoScreenState();
@@ -17,7 +22,12 @@ class _ReportInfoScreenState extends State<ReportInfoScreen> {
   final TextEditingController notesController = TextEditingController();
 
   DateTime selectedDate = DateTime.now();
-
+  final TextEditingController addressController = TextEditingController();
+  final TextEditingController inspectorController = TextEditingController();
+  final TextEditingController escortController = TextEditingController();
+  final TextEditingController jobTitleController = TextEditingController();
+  final TextEditingController officialDocumentController = TextEditingController();
+  TimeOfDay selectedTime = TimeOfDay.now();
   @override
   Widget build(BuildContext context) {
     final cubit = ReportCubit.get(context);
@@ -43,26 +53,23 @@ class _ReportInfoScreenState extends State<ReportInfoScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
 
-              /// ================= NAME =================
-              _buildSectionTitle(t.place_name),
-              _buildCard(
-                child: TextField(
-                  controller: nameController,
-                  style: const TextStyle(color: Colors.black,fontSize: 30),
-                  decoration: InputDecoration(
-                    hintText: t.place_name,
-                    border: InputBorder.none,
-                  ),
-                ),
+              _buildInput(
+                title: t.name,
+                controller: nameController,
               ),
 
-              const SizedBox(height: 20),
+              _buildInput(
+                title: t.address,
+                controller: addressController,
+              ),
 
               /// ================= DATE =================
-              _buildSectionTitle(t.report_date),
+              _buildSectionTitle(t.date),
+
               _buildCard(
                 child: InkWell(
                   onTap: () async {
+
                     final picked = await showDatePicker(
                       context: context,
                       initialDate: selectedDate,
@@ -79,49 +86,136 @@ class _ReportInfoScreenState extends State<ReportInfoScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+
                       Text(
                         selectedDate.toString().split(' ')[0],
                         style: const TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
-                          fontSize: 30
+                          fontSize: 28,
                         ),
                       ),
-                      const Icon(Icons.calendar_today, color: Colors.red,size: 30,),
+
+                      const Icon(
+                        Icons.calendar_today,
+                        color: Colors.red,
+                        size: 30,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              SizedBox(
+                height: 20,
+              ),
+              //time
+              _buildSectionTitle(t.time),
+
+              _buildCard(
+                child: InkWell(
+                  onTap: () async {
+
+                    final picked = await showTimePicker(
+                      context: context,
+                      initialTime: selectedTime,
+                    );
+
+                    if (picked != null) {
+                      setState(() {
+                        selectedTime = picked;
+                      });
+                    }
+                  },
+
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+
+                      Text(
+                        selectedTime.format(context),
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 28,
+                        ),
+                      ),
+
+                      const Icon(
+                        Icons.access_time,
+                        color: Colors.red,
+                        size: 30,
+                      ),
                     ],
                   ),
                 ),
               ),
 
               const SizedBox(height: 20),
+              const SizedBox(height: 20),
 
-              /// ================= NOTES =================
-              _buildSectionTitle(t.general_notes),
-              _buildCard(
-                child: TextField(
-                  controller: notesController,
-                  maxLines: 4,
-                  style: const TextStyle(color: Colors.black,fontSize: 30),
-                  decoration: InputDecoration(
-                    hintText: t.general_notes,
-                    border: InputBorder.none,
-                  ),
-                ),
+              _buildInput(
+                title: t.inspectorName,
+                controller: inspectorController,
               ),
 
-              const SizedBox(height: 40),
+              _buildInput(
+                title: t.escortName,
+                controller: escortController,
+              ),
 
-              /// ================= BUTTON =================
+              _buildInput(
+                title: t.jobTitle,
+                controller: jobTitleController,
+              ),
+
+              _buildInput(
+                title: t.officialDocument,
+                controller: officialDocumentController,
+                maxLines: 4
+              ),
+
+              _buildInput(
+                title: t.notes,
+                controller: notesController,
+                maxLines: 4,
+              ),
+
+              const SizedBox(height: 20),
+
               AppPrimaryButton(
-                text: t.save,
+                text: widget.nextScreen != null ? t.next : t.save,
                 onTap: () {
+
                   cubit.setReportInfo(
                     name: nameController.text,
                     date: selectedDate,
                     notes: notesController.text,
+                    address: addressController.text,
+
+                    time: selectedTime,
+
+                    inspectorName: inspectorController.text,
+                    escortName: escortController.text,
+                    jobTitle: jobTitleController.text,
+                    officialDocument: officialDocumentController.text,
+
                   );
 
-                  Navigator.pop(context);
+                  if (widget.nextScreen != null) {
+
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => widget.nextScreen!,
+                      ),
+                    );
+
+                  } else {
+
+                    Navigator.pop(context);
+
+                  }
                 },
                 isLoading: false,
               ),
@@ -158,6 +252,36 @@ class _ReportInfoScreenState extends State<ReportInfoScreen> {
         ],
       ),
       child: child,
+    );
+  }
+  Widget _buildInput({
+    required String title,
+    required TextEditingController controller,
+    int maxLines = 1,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+
+        _buildSectionTitle(title),
+
+        _buildCard(
+          child: TextField(
+            controller: controller,
+            maxLines: maxLines,
+            style: const TextStyle(
+              color: Colors.black,
+              fontSize: 26,
+            ),
+            decoration: InputDecoration(
+              hintText: title,
+              border: InputBorder.none,
+            ),
+          ),
+        ),
+
+        const SizedBox(height: 20),
+      ],
     );
   }
 }

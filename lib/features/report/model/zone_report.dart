@@ -2,11 +2,15 @@ class ZoneReport {
   final String title;
   final Map<String, double> ratings;
   final String notes;
+  final List<String> images; // paths
+
 
   ZoneReport({
     required this.title,
     required this.ratings,
     required this.notes,
+    required this.images,
+
   });
 
   /// 🔥 average
@@ -15,28 +19,22 @@ class ZoneReport {
     return ratings.values.reduce((a, b) => a + b) / ratings.length;
   }
 
-  /// 🔥 toJson
   Map<String, dynamic> toJson() {
     return {
       "title": title,
       "ratings": ratings,
       "notes": notes,
+      "images": images,
     };
   }
 
-  /// 🔥 fromJson
+  // 🔥 استرجاع
   factory ZoneReport.fromJson(Map<String, dynamic> json) {
     return ZoneReport(
       title: json["title"],
-
-      /// ⚠️ دي أهم نقطة
-      ratings: Map<String, double>.from(
-        (json["ratings"] as Map).map(
-              (key, value) => MapEntry(key, (value as num).toDouble()),
-        ),
-      ),
-
+      ratings: Map<String, double>.from(json["ratings"]),
       notes: json["notes"],
+      images: List<String>.from(json["images"] ?? []),
     );
   }
 }

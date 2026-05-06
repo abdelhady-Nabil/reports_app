@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reports_app/features/report/view_model/cubit/report_cubit.dart';
@@ -59,47 +61,55 @@ class FinalReportScreen extends StatelessWidget {
               ],
             ),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Column(
-                  children: [
-                    Row(
-                      children: [
-                        AppText(title: t.generalEvaluation),
-                        const SizedBox(width: 40),
-                        Expanded(
-                          child: AppText(
-                            title: "${(report.totalAverage * 10).toStringAsFixed(0)}%",
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        AppText(title: t.place_name),
-                        const SizedBox(width: 40),
-                        Expanded(
-                          child: AppText(
-                            title: report.factoryName,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 5),
-                    Row(
-                      children: [
-                        AppText(title: t.report_date),
-                        const SizedBox(width: 40),
-                        Expanded(
-                          child: AppText(
-                            title: report.date.toString().split(' ')[0],
-                          ),
-                        ),
-                      ],
-                    ),
 
-                  ],
+                _buildHeaderRow(
+                  title: t.generalEvaluation,
+                  value: "${(report.totalAverage * 10).toStringAsFixed(0)}%",
                 ),
 
+                _buildHeaderRow(
+                  title: t.name,
+                  value: report.factoryName,
+                ),
+
+                _buildHeaderRow(
+                  title: t.address,
+                  value: report.address,
+                ),
+
+                _buildHeaderRow(
+                  title: t.date,
+                  value: report.date.toString().split(' ')[0],
+                ),
+
+                _buildHeaderRow(
+                  title: t.time,
+                  value: report.reportTime != null
+                      ? "${report.reportTime!.hour}:${report.reportTime!.minute}"
+                      : "--:--",
+                ),
+
+                _buildHeaderRow(
+                  title: t.inspectorName,
+                  value: report.inspectorName,
+                ),
+
+                _buildHeaderRow(
+                  title: t.escortName,
+                  value: report.escortName,
+                ),
+
+                _buildHeaderRow(
+                  title: t.jobTitle,
+                  value: report.jobTitle,
+                ),
+
+                // _buildHeaderRow(
+                //   title: t.officialDocument,
+                //   value: report.officialDocument,
+                // ),
               ],
             ),
           ),
@@ -232,7 +242,52 @@ class FinalReportScreen extends StatelessWidget {
                           ],
                         ),
 
+                      const SizedBox(height: 10),
 
+                      /// ================= ZONE IMAGES =================
+                      if (zone.images.isNotEmpty)
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            AppText(title: "📸 ${t.photos}", color: Colors.black),
+
+                            const SizedBox(height: 10),
+
+                            Wrap(
+                              spacing: 10,
+                              runSpacing: 10,
+                              children: zone.images.map((imgPath) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (_) => Dialog(
+                                        child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(16),
+                                          child: Image.file(
+                                            File(imgPath),
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(12),
+                                    child: Image.file(
+                                      File(imgPath),
+                                      width: 100,
+                                      height: 100,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+
+                            const SizedBox(height: 10),
+                          ],
+                        ),
 
                     ],
                   ),
@@ -243,6 +298,40 @@ class FinalReportScreen extends StatelessWidget {
 
           const SizedBox(height: 20),
 
+          // ================= paper =================
+          if (report.officialDocument.isNotEmpty)
+            Column(
+
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                AppText(title: t.officialDocument,color: Colors.black,),
+                Container(
+                  margin: const EdgeInsets.only(bottom: 16),
+                  padding: const EdgeInsets.all(16),
+
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.05),
+                        blurRadius: 10,
+                        offset: const Offset(0, 5),
+                      )
+                    ],
+                  ),
+                  child:Text(
+                    report.officialDocument,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: isTablet ? 35 : 25,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+
+                ),
+              ],
+            ),
           // ================= NOTES =================
           if (report.generalNotes.isNotEmpty)
             Column(
@@ -334,6 +423,35 @@ class FinalReportScreen extends StatelessWidget {
           const SizedBox(height: 10),
 
 
+        ],
+      ),
+    );
+  }
+  Widget _buildHeaderRow({
+    required String title,
+    required String value,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+
+          Expanded(
+            flex: 2,
+            child: AppText(
+              title: title,
+            ),
+          ),
+
+          const SizedBox(width: 10),
+
+          Expanded(
+            flex: 3,
+            child: AppText(
+              title: value,
+            ),
+          ),
         ],
       ),
     );

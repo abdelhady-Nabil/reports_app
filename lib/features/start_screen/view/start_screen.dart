@@ -11,7 +11,10 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../cubit/app_states.dart';
 import '../../butcher_shops/view/butcher_shops_report_screen.dart';
+import '../../factories/view/factories_report_screen.dart';
+import '../../report/view/report_info_screen.dart';
 import '../../report/view_model/cubit/report_cubit.dart';
+import '../../slaughterhouse/view/slaughterhouse_report_screen.dart';
 
 class StartScreen extends StatefulWidget {
   const StartScreen({super.key});
@@ -102,21 +105,44 @@ class _StartScreenState extends State<StartScreen> {
                 AppMenuCard(
                   title: t.slaughterhouses,
                   icon: 'shopes.png',
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => ReportInfoScreen(
+                          nextScreen: SlaughterhouseReportScreen(),
+                        ),
+                      ),
+                    );
+                  },
                 ),
 
                 AppMenuCard(
                   title: t.factories,
                   icon: 'factory.png',
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => ReportInfoScreen(
+                          nextScreen: FactoriesReportScreen(),
+                        ),
+                      ),
+                    );                  },
                 ),
 
                 AppMenuCard(
                   title: t.butcherShops,
                   icon: 'shope.png',
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>ButcherShopsReportScreen()));
-                  },
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => ReportInfoScreen(
+                          nextScreen: ButcherShopsReportScreen(),
+                        ),
+                      ),
+                    );                  },
                 ),
               ],
             ),

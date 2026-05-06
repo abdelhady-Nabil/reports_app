@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:reports_app/core/widgets/text_wedget.dart';
 import 'package:reports_app/helper/localization_helper.dart';
 
@@ -9,6 +12,8 @@ import '../../butcher_shops/view/butcher_shops_report_screen.dart';
 import '../model/zone_report.dart';
 import '../view_model/cubit/report_cubit.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'dart:io';
+import 'package:path_provider/path_provider.dart';
 
 class CreateReportScreen extends StatefulWidget {
   const CreateReportScreen({super.key});
@@ -20,12 +25,98 @@ class CreateReportScreen extends StatefulWidget {
 class _CreateReportScreenState extends State<CreateReportScreen> {
 
   String notes = "";
+  final picker = ImagePicker();
+  List<XFile> images = [];
 
-  @override
+
+  Future<void> pickImage(ImageSource source) async {
+    final picked = await picker.pickImage(
+      source: source,
+      imageQuality: 70,
+    );
+
+    if (picked != null) {
+      final savedPath = await saveImageToAppDir(picked);
+
+      setState(() {
+        images.add(XFile(savedPath)); // 🔥 بنخزن path الجديد
+      });
+    }
+  }
+  Future<void> showImageSourcePicker() async {
+    showModalBottomSheet(
+      context: context,
+      builder: (_) {
+        return SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+
+              ListTile(
+                leading: const Icon(Icons.camera_alt),
+                title: const Text("الكاميرا"),
+                onTap: () {
+                  Navigator.pop(context);
+                  pickImage(ImageSource.camera);
+                },
+              ),
+
+              ListTile(
+                leading: const Icon(Icons.photo),
+                title: const Text("المعرض"),
+                onTap: () {
+                  Navigator.pop(context);
+                  pickImage(ImageSource.gallery);
+                },
+              ),
+
+              ListTile(
+                leading: const Icon(Icons.photo_library),
+                title: const Text("اختيار عدة صور"),
+                onTap: () {
+                  Navigator.pop(context);
+                  pickMultipleImages();
+                },
+              ),
+
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Future<String> saveImageToAppDir(XFile image) async {
+    final appDir = await getApplicationDocumentsDirectory();
+
+    final fileName = DateTime.now().millisecondsSinceEpoch.toString();
+
+    final newImage = File('${appDir.path}/$fileName.jpg');
+
+    final bytes = await image.readAsBytes();
+
+    await newImage.writeAsBytes(bytes);
+
+    return newImage.path; // 🔥 ده المهم
+  }
+  Future<void> pickMultipleImages() async {
+    final picked = await picker.pickMultiImage(imageQuality: 70);
+
+    if (picked.isNotEmpty) {
+      for (var img in picked) {
+        final savedPath = await saveImageToAppDir(img);
+
+        images.add(XFile(savedPath));
+      }
+
+      setState(() {});
+    }
+  }  @override
   Widget build(BuildContext context) {
     final cubit = ReportCubit.get(context);
     final questions = cubit.getCurrentQuestions();
     final t = AppLocalizations.of(context)!;
+
 
     return Scaffold(
       backgroundColor: const Color(0xffF7F8FA),
@@ -112,6 +203,67 @@ class _CreateReportScreenState extends State<CreateReportScreen> {
               ],
             ),
 
+            const SizedBox(height: 16),
+
+            /// 📸 ADD IMAGE BUTTON
+            AppPrimaryButton(
+              text: t.addedPhotos,
+              onTap: showImageSourcePicker,
+              isLoading: false,
+            ),
+
+            const SizedBox(height: 10),
+
+            /// 🖼️ IMAGES PREVIEW
+            if (images.isNotEmpty)
+              GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: images.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                ),
+                itemBuilder: (context, index) {
+                  final img = images[index];
+
+                  return Stack(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: Image.file(
+                          File(img.path),
+                          fit: BoxFit.cover,
+                          width: double.infinity,
+                          height: double.infinity,
+                        ),
+                      ),
+
+                      /// ❌ delete
+                      Positioned(
+                        top: 5,
+                        right: 5,
+                        child: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              images.removeAt(index);
+                            });
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.black.withOpacity(0.6),
+                              shape: BoxShape.circle,
+                            ),
+                            padding: const EdgeInsets.all(4),
+                            child: const Icon(Icons.close, size: 14, color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              ),
             const SizedBox(height: 30),
 
             AppPrimaryButton(
@@ -126,10 +278,11 @@ class _CreateReportScreenState extends State<CreateReportScreen> {
                       item.key: item.value,
                   },
                   notes: notes,
+                  images: images.map((e) => e.path).toList(),
                 );
 
                 cubit.addZoneReport(report);
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>ButcherShopsReportScreen())); // يرجع للداشبورد
+                Navigator.pop(context);
               },
               isLoading: false,
               text: t.saveReport,
