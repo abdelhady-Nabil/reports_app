@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reports_app/features/report/view_model/cubit/report_cubit.dart';
@@ -75,6 +76,11 @@ class FinalReportScreen extends StatelessWidget {
                 ),
 
                 _buildHeaderRow(
+                  title: t.mobileNumber,
+                  value: report.phone,
+                ),
+
+                _buildHeaderRow(
                   title: t.address,
                   value: report.address,
                 ),
@@ -103,7 +109,7 @@ class FinalReportScreen extends StatelessWidget {
 
                 _buildHeaderRow(
                   title: t.jobTitle,
-                  value: report.jobTitle,
+                  value: t.translate(report.jobTitle),
                 ),
 
                 // _buildHeaderRow(
@@ -368,6 +374,184 @@ class FinalReportScreen extends StatelessWidget {
             ),
 
 
+          const SizedBox(height: 25),
+
+          /// ================= CHART =================
+
+          Container(
+            padding: const EdgeInsets.all(20),
+
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(24),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.06),
+                  blurRadius: 15,
+                  offset: const Offset(0, 6),
+                ),
+              ],
+            ),
+
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+
+                AppText(
+                  title: "📊 ${t.generalEvaluation}",
+                  color: Colors.black,
+                ),
+
+                const SizedBox(height: 25),
+
+                SizedBox(
+                  height: 350,
+
+                  child: BarChart(
+
+                    BarChartData(
+
+                      maxY: 10,
+
+                      alignment: BarChartAlignment.spaceAround,
+
+                      gridData: FlGridData(
+                        show: true,
+                        horizontalInterval: 2,
+                        drawVerticalLine: false,
+                      ),
+
+                      borderData: FlBorderData(show: false),
+
+                      titlesData: FlTitlesData(
+
+                        topTitles: const AxisTitles(
+                          sideTitles: SideTitles(showTitles: false),
+                        ),
+
+                        rightTitles: const AxisTitles(
+                          sideTitles: SideTitles(showTitles: false),
+                        ),
+
+                        leftTitles: AxisTitles(
+                          sideTitles: SideTitles(
+                            showTitles: true,
+                            interval: 2,
+                            reservedSize: 30,
+                          ),
+                        ),
+
+                        bottomTitles: AxisTitles(
+
+                          sideTitles: SideTitles(
+                            showTitles: true,
+                            reservedSize: 90,
+
+                            getTitlesWidget: (value, meta) {
+
+                              final index = value.toInt();
+
+                              if (index >= report.zones.length) {
+                                return const SizedBox();
+                              }
+
+                              final zoneTitle =
+                              t.translate(report.zones[index].title);
+
+                              /// كل كلمة تحت التانية
+                              final formattedTitle =
+                              zoneTitle.replaceAll(' ', '\n');
+
+                              return Padding(
+                                padding: const EdgeInsets.only(top: 12),
+
+                                child: Text(
+                                  formattedTitle,
+
+                                  textAlign: TextAlign.center,
+
+                                  style: const TextStyle(
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.black87,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+
+                      barGroups: List.generate(
+                        report.zones.length,
+
+                            (index) {
+
+                          final zone = report.zones[index];
+
+                          final avg = zone.average;
+
+                          return BarChartGroupData(
+
+                            x: index,
+
+                            barRods: [
+
+                              BarChartRodData(
+
+                                toY: avg,
+
+                                width: 26,
+
+                                borderRadius: BorderRadius.circular(8),
+
+                                gradient: LinearGradient(
+                                  colors: [
+                                    getColor(avg).withOpacity(0.7),
+                                    getColor(avg),
+                                  ],
+                                  begin: Alignment.bottomCenter,
+                                  end: Alignment.topCenter,
+                                ),
+
+                              ),
+                            ],
+
+                            showingTooltipIndicators: [0],
+                          );
+                        },
+                      ),
+
+                      barTouchData: BarTouchData(
+
+                        enabled: true,
+
+                        touchTooltipData: BarTouchTooltipData(
+
+                          getTooltipItem:
+                              (group, groupIndex, rod, rodIndex) {
+
+                            final zone =
+                            report.zones[group.x];
+
+                            return BarTooltipItem(
+
+                              "${t.translate(zone.title)}\n${zone.average.toStringAsFixed(1)}",
+
+                              const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
           const SizedBox(height: 20),
 
           AppPrimaryButton(

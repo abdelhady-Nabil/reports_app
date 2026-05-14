@@ -389,6 +389,8 @@ class ReportCubit extends Cubit<ReportStates> {
     required DateTime date,
     required String notes,
     required String address,
+    required String phone,
+
     required TimeOfDay time,
     required String inspectorName,
     required String escortName,
@@ -404,6 +406,8 @@ class ReportCubit extends Cubit<ReportStates> {
       date: date,
       generalNotes: notes,
       address: address,
+      phone: phone,
+
       reportTime: time,
 
       inspectorName: inspectorName,
@@ -422,6 +426,7 @@ class ReportCubit extends Cubit<ReportStates> {
     zones: [],
     generalNotes: '',
     address: '',
+    phone: '',
     inspectorName: '',
     escortName: '',
     jobTitle: '',
@@ -444,7 +449,7 @@ class ReportCubit extends Cubit<ReportStates> {
   }
 
   Future<pw.Font> loadFont() async {
-    final fontData = await rootBundle.load("assets/fonts/Cairo-Bold.ttf");
+    final fontData = await rootBundle.load("assets/fonts/Amiri-Bold.ttf");
     return pw.Font.ttf(fontData);
   }
 
@@ -452,6 +457,13 @@ class ReportCubit extends Cubit<ReportStates> {
     final report = masterReport;
     final pdf = pw.Document();
     final font = await loadFont();
+    /// ================= LOAD LOGO =================
+
+    final logo = pw.MemoryImage(
+      (await rootBundle.load('assets/images/logo2.png'))
+          .buffer
+          .asUint8List(),
+    );
 
     final t = AppLocalizations.of(context)!;
     final isArabic = Localizations.localeOf(context).languageCode == 'ar';
@@ -467,6 +479,17 @@ class ReportCubit extends Cubit<ReportStates> {
                   : pw.CrossAxisAlignment.start,
               mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
               children: [
+
+                /// LOGO
+                pw.Center(
+                  child: pw.Image(
+                    logo,
+                    width: 120,
+                    height: 120,
+                  ),
+                ),
+
+                pw.SizedBox(height: 15),
 
                 // ================= HEADER =================
                 pw.Row(
@@ -489,12 +512,12 @@ class ReportCubit extends Cubit<ReportStates> {
                   crossAxisAlignment: pw.CrossAxisAlignment.start,
                   children: [
 
-                    pw.SizedBox(height: 20),
+                    pw.SizedBox(height: 24),
 
                     /// NAME
                     pw.Text(
                       "${t.name} : ${report.factoryName}",
-                      style: pw.TextStyle(fontSize: 18),
+                      style: pw.TextStyle(fontSize: 24),
                     ),
 
                     pw.SizedBox(height: 8),
@@ -502,7 +525,14 @@ class ReportCubit extends Cubit<ReportStates> {
                     /// ADDRESS
                     pw.Text(
                       "${t.address} : ${report.address}",
-                      style: pw.TextStyle(fontSize: 18),
+                      style: pw.TextStyle(fontSize: 24),
+                    ),
+
+                    pw.SizedBox(height: 8),
+                    /// ADDRESS
+                    pw.Text(
+                      "${t.mobileNumber} : ${report.phone}",
+                      style: pw.TextStyle(fontSize: 24),
                     ),
 
                     pw.SizedBox(height: 8),
@@ -510,14 +540,14 @@ class ReportCubit extends Cubit<ReportStates> {
                     /// DATE
                     pw.Text(
                       "${t.date} : ${report.date.toString().split(' ')[0]}",
-                      style: pw.TextStyle(fontSize: 18),
+                      style: pw.TextStyle(fontSize: 24),
                     ),
 
                     pw.SizedBox(height: 8),
 
                     pw.Text(
                       "${t.time} : ${report.reportTime!.hour % 12 == 0 ? 12 : report.reportTime!.hour % 12}:${report.reportTime?.minute.toString().padLeft(2, '0')}",
-                      style: pw.TextStyle(fontSize: 18),
+                      style: pw.TextStyle(fontSize: 24),
                     ),
 
                     pw.SizedBox(height: 8),
@@ -525,7 +555,7 @@ class ReportCubit extends Cubit<ReportStates> {
                     /// INSPECTOR
                     pw.Text(
                       "${t.inspectorName} : ${report.inspectorName}",
-                      style: pw.TextStyle(fontSize: 18),
+                      style: pw.TextStyle(fontSize: 24),
                     ),
 
                     pw.SizedBox(height: 8),
@@ -533,15 +563,15 @@ class ReportCubit extends Cubit<ReportStates> {
                     /// ESCORT
                     pw.Text(
                       "${t.escortName} : ${report.escortName}",
-                      style: pw.TextStyle(fontSize: 18),
+                      style: pw.TextStyle(fontSize: 24),
                     ),
 
                     pw.SizedBox(height: 8),
 
                     /// JOB TITLE
                     pw.Text(
-                      "${t.jobTitle} : ${report.jobTitle}",
-                      style: pw.TextStyle(fontSize: 18),
+                      "${t.jobTitle} : ${t.translate(report.jobTitle)}",
+                      style: pw.TextStyle(fontSize: 24),
                     ),
 
                     pw.SizedBox(height: 8),
@@ -549,13 +579,13 @@ class ReportCubit extends Cubit<ReportStates> {
                     /// OFFICIAL DOCUMENT
                     pw.Text(
                       "${t.officialDocument} : ${report.officialDocument}",
-                      style: pw.TextStyle(fontSize: 18),
+                      style: pw.TextStyle(fontSize: 24),
                     ),
 
                     pw.SizedBox(height: 15),
 
                     /// GENERAL EVALUATION
-                    pw.Text( "${t.generalEvaluation} : ${(report.totalAverage * 10).toStringAsFixed(0)}%", textAlign: isArabic ? pw.TextAlign.right : pw.TextAlign.left, style: pw.TextStyle(fontSize:18), ),
+                    pw.Text( "${t.generalEvaluation} : ${(report.totalAverage * 10).toStringAsFixed(0)}%", textAlign: isArabic ? pw.TextAlign.right : pw.TextAlign.left, style: pw.TextStyle(fontSize:24), ),
                   ],
                 ),
 
@@ -578,13 +608,13 @@ class ReportCubit extends Cubit<ReportStates> {
 
                           pw.Text(
                             t.translate(zone.title),
-                            style: pw.TextStyle(fontSize: 18),
+                            style: pw.TextStyle(fontSize: 24),
                             textAlign: isArabic ? pw.TextAlign.right : pw.TextAlign.left,
                           ),
 
                           pw.Text(
                             avg.toStringAsFixed(1),
-                            style: pw.TextStyle(fontSize: 18),
+                            style: pw.TextStyle(fontSize: 24),
                             textAlign: isArabic ? pw.TextAlign.right : pw.TextAlign.left,
                           ),
 
@@ -599,8 +629,10 @@ class ReportCubit extends Cubit<ReportStates> {
                           mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                           children: [
                             // 🔥 ترجمة السؤال
-                            pw.Text(t.translate(e.key),textAlign: isArabic ? pw.TextAlign.right : pw.TextAlign.left,),
-                            pw.Text(e.value.toStringAsFixed(1),textAlign: isArabic ? pw.TextAlign.right : pw.TextAlign.left,),
+                            pw.Text(t.translate(e.key),style: pw.TextStyle(fontSize: 22),
+                              textAlign: isArabic ? pw.TextAlign.right : pw.TextAlign.left,),
+                            pw.Text(e.value.toStringAsFixed(1),style: pw.TextStyle(fontSize: 22),
+                              textAlign: isArabic ? pw.TextAlign.right : pw.TextAlign.left,),
 
                           ],
                         );
@@ -610,7 +642,7 @@ class ReportCubit extends Cubit<ReportStates> {
                           padding: const pw.EdgeInsets.only(top: 6),
                           child: pw.Text(
                             "${t.notes}: ${zone.notes}",
-                            style: pw.TextStyle(fontSize: 12),
+                            style: pw.TextStyle(fontSize: 22),
                             textAlign: isArabic ? pw.TextAlign.right : pw.TextAlign.left,
                           ),
                         ),
@@ -639,6 +671,121 @@ class ReportCubit extends Cubit<ReportStates> {
                     ],
                   );
                 }),
+                pw.SizedBox(height: 25),
+
+                /// ================= ANALYTICS CHART =================
+
+                pw.Container(
+                  padding: const pw.EdgeInsets.all(20),
+
+                  decoration: pw.BoxDecoration(
+                    border: pw.Border.all(
+                      color: PdfColors.grey300,
+                    ),
+
+                    borderRadius: pw.BorderRadius.circular(16),
+                  ),
+
+                  child: pw.Column(
+                    crossAxisAlignment: pw.CrossAxisAlignment.start,
+
+                    children: [
+
+                      pw.Text(
+                        "${t.generalEvaluation}",
+                        style: pw.TextStyle(
+                          fontSize: 22,
+                          fontWeight: pw.FontWeight.bold,
+                          font: font
+                        ),
+                      ),
+
+                      pw.SizedBox(height: 25),
+
+                      pw.Container(
+                        height: 320,
+
+                        child: pw.Chart(
+
+                          grid: pw.CartesianGrid(
+
+                            xAxis: pw.FixedAxis.fromStrings(
+
+                              List.generate(
+                                report.zones.length,
+                                    (index) {
+
+                                  /// كل كلمة تحت التانية
+                                  return t
+                                      .translate(report.zones[index].title)
+                                      .replaceAll(' ', '\n');
+                                },
+                              ),
+
+                              marginStart: 30,
+                              marginEnd: 30,
+                              ticks: true,
+                            ),
+
+                            yAxis: pw.FixedAxis(
+                              [0, 2, 4, 6, 8, 10],
+                              divisions: true,
+                            ),
+                          ),
+
+                          datasets: [
+
+                            /// ================= BAR DATA =================
+
+                            pw.BarDataSet(
+
+                              width: 22,
+
+                              color: PdfColors.red,
+
+                              data: List.generate(
+                                report.zones.length,
+
+                                    (index) {
+
+                                  return pw.PointChartValue(
+                                    index.toDouble(),
+                                    report.zones[index].average,
+                                  );
+                                },
+                              ),
+                            ),
+
+                            /// ================= LINE DATA =================
+
+                            pw.LineDataSet(
+
+                              isCurved: true,
+
+                              drawSurface: false,
+
+                              color: PdfColors.blue,
+
+                              lineWidth: 2,
+
+                              data: List.generate(
+                                report.zones.length,
+
+                                    (index) {
+
+                                  return pw.PointChartValue(
+                                    index.toDouble(),
+                                    report.zones[index].average,
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
 
                 if (report.generalNotes.isNotEmpty)
                   pw.Padding(
@@ -699,6 +846,8 @@ class ReportCubit extends Cubit<ReportStates> {
       zones: [],
       generalNotes: "",
       address: '',
+      phone: '',
+
       inspectorName: '',
       escortName: '',
       jobTitle: '',

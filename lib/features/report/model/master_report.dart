@@ -7,6 +7,8 @@ class MasterReport {
   final List<ZoneReport> zones;
   final String generalNotes;
   final String address;
+  final String phone;
+
   final String inspectorName;
   final String escortName;
   final String jobTitle;
@@ -19,6 +21,8 @@ class MasterReport {
     required this.zones,
     required this.generalNotes,
     required this.address,
+    required this.phone,
+
     required this.inspectorName,
     required this.escortName,
     required this.jobTitle,
@@ -33,6 +37,8 @@ class MasterReport {
     List<ZoneReport>? zones,
     String? generalNotes,
     String? address,
+    String? phone,
+
     TimeOfDay? reportTime,
     String? inspectorName,
     String? escortName,
@@ -45,6 +51,8 @@ class MasterReport {
       zones: zones ?? this.zones,
       generalNotes: generalNotes ?? this.generalNotes,
       address: address ?? this.address,
+      phone: phone ?? this.phone,
+
       reportTime: reportTime ?? this.reportTime,
 
       inspectorName: inspectorName ?? this.inspectorName,
@@ -68,6 +76,7 @@ class MasterReport {
       "generalNotes": generalNotes,
       "zones": zones.map((e) => e.toJson()).toList(),
       "address": address,
+      "phone": phone,
       "inspectorName": inspectorName,
       "escortName": escortName,
       "jobTitle": jobTitle,
@@ -88,6 +97,7 @@ class MasterReport {
           .map((e) => ZoneReport.fromJson(e))
           .toList(),
       address: json["address"] ?? '',
+      phone: json["phone"] ?? '',
       inspectorName: json["inspectorName"] ?? '',
       escortName: json["escortName"] ?? '',
       jobTitle: json["jobTitle"] ?? '',

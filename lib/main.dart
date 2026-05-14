@@ -38,7 +38,9 @@ class AppView extends StatelessWidget {
         final cubit = AppCubit.get(context);
 
         return  MaterialApp(
+          title: 'Butchery system and evaluation',
           debugShowCheckedModeBanner: false,
+
 
           theme: cubit.isDark
               ? ThemeData.dark().copyWith(

@@ -103,15 +103,15 @@ class SlaughterhouseReportScreen extends StatelessWidget {
 
 
 
-              AppMenuCard(
-                title: t.add_report_info,
-                icon: 'add_shope.png',
-                onTap: () {
-                  ReportCubit.get(context).selectedZone = "salesArea";
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ReportInfoScreen()));
-
-                },
-              ),
+              // AppMenuCard(
+              //   title: t.add_report_info,
+              //   icon: 'add_shope.png',
+              //   onTap: () {
+              //     ReportCubit.get(context).selectedZone = "salesArea";
+              //     Navigator.push(context, MaterialPageRoute(builder: (context)=>ReportInfoScreen()));
+              //
+              //   },
+              // ),
 
               SizedBox(
                 height: 100,

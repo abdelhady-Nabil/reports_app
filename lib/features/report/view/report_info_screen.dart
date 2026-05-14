@@ -4,6 +4,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:reports_app/core/widgets/text_wedget.dart';
 
 import '../view_model/cubit/report_cubit.dart';
+import 'package:reports_app/helper/localization_helper.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:reports_app/helper/localization_helper.dart';
 
 class ReportInfoScreen extends StatefulWidget {
   final Widget? nextScreen;
@@ -23,12 +26,139 @@ class _ReportInfoScreenState extends State<ReportInfoScreen> {
 
   DateTime selectedDate = DateTime.now();
   final TextEditingController addressController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
+
   final TextEditingController inspectorController = TextEditingController();
   final TextEditingController escortController = TextEditingController();
   final TextEditingController jobTitleController = TextEditingController();
   final TextEditingController officialDocumentController = TextEditingController();
   TimeOfDay selectedTime = TimeOfDay.now();
-  @override
+  final List<String> jobTitleKeys = [
+    "job_head_board",
+    "job_general_manager",
+    "job_facility_manager",
+    "job_assistant_manager",
+    "job_quality_supervisor",
+    "job_production_supervisor",
+    "job_quality_manager",
+    "job_butcher_manager",
+    "job_butcher_supervisor",
+    "job_senior_butcher",
+    "job_other"
+  ];
+
+  Widget _buildJobTitleSelector(AppLocalizations t) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildSectionTitle(t.jobTitle),
+
+        _buildCard(
+          child: InkWell(
+            onTap: () {
+              showModalBottomSheet(
+                context: context,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                ),
+                builder: (context) {
+                  return ListView.separated(
+                    padding: const EdgeInsets.all(16),
+                    itemCount: jobTitleKeys.length,
+                    separatorBuilder: (_, __) => const Divider(),
+                    itemBuilder: (context, index) {
+                      final key = jobTitleKeys[index];
+
+                      return ListTile(
+                        title: Text(
+                          t.translate(key),
+                          style: const TextStyle(fontSize: 18),
+                        ),
+                        onTap: () {
+                          Navigator.pop(context);
+
+                          if (key == "job_other") {
+                            _showManualJobDialog(t);
+                          } else {
+                            setState(() {
+                              jobTitleController.text = key;
+                            });
+                          }
+                        },
+                      );
+                    },
+                  );
+                },
+              );
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  jobTitleController.text.isEmpty
+                      ? t.jobTitle
+                      : jobTitleController.text.startsWith("job_")
+                      ? t.translate(jobTitleController.text)
+                      : jobTitleController.text,
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 22,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const Icon(
+                  Icons.arrow_drop_down_circle,
+                  color: Colors.red,
+                  size: 30,
+                ),
+              ],
+            ),
+          ),
+        ),
+
+        const SizedBox(height: 20),
+      ],
+    );
+  }
+  void _showManualJobDialog(AppLocalizations t) {
+    final controller = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          title: Text(t.job_other),
+          content: TextField(
+            controller: controller,
+            decoration: InputDecoration(
+              hintText: t.job_other,
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text("Cancel"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                if (controller.text.trim().isNotEmpty) {
+                  setState(() {
+                    jobTitleController.text = controller.text.trim();
+                  });
+                }
+                Navigator.pop(context);
+              },
+              child: const Text("OK"),
+            ),
+          ],
+        );
+      },
+    );
+  }  @override
+
   Widget build(BuildContext context) {
     final cubit = ReportCubit.get(context);
     final t = AppLocalizations.of(context)!;
@@ -61,6 +191,11 @@ class _ReportInfoScreenState extends State<ReportInfoScreen> {
               _buildInput(
                 title: t.address,
                 controller: addressController,
+              ),
+
+              _buildInput(
+                title: t.mobileNumber,
+                controller: phoneController,
               ),
 
               /// ================= DATE =================
@@ -164,11 +299,7 @@ class _ReportInfoScreenState extends State<ReportInfoScreen> {
                 controller: escortController,
               ),
 
-              _buildInput(
-                title: t.jobTitle,
-                controller: jobTitleController,
-              ),
-
+              _buildJobTitleSelector(t),
               _buildInput(
                 title: t.officialDocument,
                 controller: officialDocumentController,
@@ -192,7 +323,7 @@ class _ReportInfoScreenState extends State<ReportInfoScreen> {
                     date: selectedDate,
                     notes: notesController.text,
                     address: addressController.text,
-
+                    phone: phoneController.text,
                     time: selectedTime,
 
                     inspectorName: inspectorController.text,
@@ -284,4 +415,5 @@ class _ReportInfoScreenState extends State<ReportInfoScreen> {
       ],
     );
   }
+
 }

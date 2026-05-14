@@ -219,6 +219,8 @@ extension LocalizationHelper on AppLocalizations {
 
       case "inspectorName":
         return inspectorName;
+      case "generalEvaluation":
+        return generalEvaluation;
 
       case "escortName":
         return escortName;
@@ -231,6 +233,30 @@ extension LocalizationHelper on AppLocalizations {
 
       case "notes":
         return notes;
+      case "mobileNumber":
+        return mobileNumber;
+      case "job_head_board":
+        return job_head_board;
+      case "job_general_manager":
+        return job_general_manager;
+      case "job_facility_manager":
+        return job_facility_manager;
+      case "job_assistant_manager":
+        return job_assistant_manager;
+      case "job_quality_supervisor":
+        return job_quality_supervisor;
+      case "job_production_supervisor":
+        return job_production_supervisor;
+      case "job_quality_manager":
+        return job_quality_manager;
+      case "job_butcher_manager":
+        return job_butcher_manager;
+      case "job_butcher_supervisor":
+        return job_butcher_supervisor;
+      case "job_senior_butcher":
+        return job_senior_butcher;
+      case "job_other":
+        return job_other;
 
 
       default:

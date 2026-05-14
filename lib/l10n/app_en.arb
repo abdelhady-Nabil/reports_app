@@ -93,7 +93,7 @@
   "skinningArea": "Skinning Area / Hide Removal",
   "eviscerationArea": "Evisceration Area / Organ Removal",
   "splittingArea": "Splitting Area / Carcass Halving",
-  "name": "Name",
+  "name": "Customer name",
   "address": "Address",
   "date": "Date",
   "time": "Time",
@@ -102,7 +102,19 @@
   "jobTitle": "Job Title",
   "officialDocument": "Official Document",
   "notes": "Notes",
-  "next": "next"
+  "next": "next",
+  "mobileNumber": "Mobile Number",
+  "job_head_board": "Chairman of the Board",
+  "job_general_manager": "General Manager",
+  "job_facility_manager": "Facility Manager",
+  "job_assistant_manager": "Assistant Manager",
+  "job_quality_supervisor": "Quality Supervisor",
+  "job_production_supervisor": "Production Supervisor",
+  "job_quality_manager": "Quality Manager",
+  "job_butcher_manager": "Butchery Manager",
+  "job_butcher_supervisor": "Butchery Supervisor",
+  "job_senior_butcher": "Senior Butcher",
+  "job_other": "Other"
 
 
 
